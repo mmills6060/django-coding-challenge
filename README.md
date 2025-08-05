@@ -1,37 +1,25 @@
 # IoT Payload Parser
 
-## Setup Instructions
+## Installation
 
-### Prerequisites
 
-- Python 3.8 or higher
-- pip (Python package installer)
-
-### Installation
-
-1. **Clone the repository**
-   ```bash
-   git clone <repository-url>
-   cd django-coding-challenge
-   ```
-
-2. **Create and activate virtual environment**
+1. **Create and activate virtual environment**
    ```bash
    python3 -m venv venv
    source venv/bin/activate  # On Windows: venv\Scripts\activate
    ```
 
-3. **Install dependencies**
+2. **Install dependencies**
    ```bash
    pip install -r requirements.txt
    ```
 
-4. **Run database migrations**
+3. **Run database migrations**
    ```bash
    python manage.py migrate
    ```
 
-5. **Create superuser (optional)**
+4. **Create superuser**
    ```bash
    python manage.py createsuperuser
    ```
@@ -39,16 +27,16 @@
    - Username: `admin`
    - Password: `admin123`
 
-6. **Start the development server**
+5. **Start the development server**
    ```bash
    python manage.py runserver
    ```
+6. **Run test_payload.py**
+   ```bash
+   python test_payload.py
+   ```
 
-The application will be available at `http://localhost:8000`
-
-## API Documentation
-
-### Authentication
+## Authentication
 
 All API endpoints require token authentication. Get a token by making a POST request to `/api/token/`:
 
@@ -138,9 +126,7 @@ GET /api/payloads/?devEUI=abcdabcdabcdabcd
 
 Returns detailed information about a specific payload.
 
-## Testing
-
-### Using the Test Script
+## Using the Test Script
 
 Run the provided test script to verify functionality:
 
@@ -154,41 +140,3 @@ This script will:
 - Test duplicate payload rejection
 - Test invalid Base64 data handling
 - Retrieve and display results
-
-### Manual Testing with curl
-
-1. **Get authentication token:**
-   ```bash
-   curl -X POST http://localhost:8000/api/token/ \
-     -H "Content-Type: application/json" \
-     -d '{"username": "admin", "password": "admin123"}'
-   ```
-
-2. **Send a payload:**
-   ```bash
-   curl -X POST http://localhost:8000/api/receive/ \
-     -H "Authorization: Token <your-token>" \
-     -H "Content-Type: application/json" \
-     -d '{
-       "fCnt": 100,
-       "devEUI": "abcdabcdabcdabcd",
-       "data": "AQ==",
-       "rxInfo": [],
-       "txInfo": {}
-     }'
-   ```
-
-3. **View devices:**
-   ```bash
-   curl -H "Authorization: Token <your-token>" \
-     http://localhost:8000/api/devices/
-   ```
-
-## Error Handling
-
-The application handles various error scenarios:
-
-- **Duplicate Payloads**: Returns 400 error if `fCnt` already exists for the device
-- **Invalid Base64**: Returns 400 error for malformed Base64 data
-- **Missing Fields**: Returns 400 error for required fields
-- **Authentication**: Returns 401 error for invalid or missing tokens
