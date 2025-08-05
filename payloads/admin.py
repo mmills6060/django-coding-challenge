@@ -13,10 +13,10 @@ class DeviceAdmin(admin.ModelAdmin):
 
 @admin.register(Payload)
 class PayloadAdmin(admin.ModelAdmin):
-    list_display = ['id', 'device', 'fCnt', 'data_hex', 'is_passing', 'created_at']
+    list_display = ['id', 'device', 'fCnt', 'data_hex', 'is_passing', 'rx_info', 'tx_info', 'created_at']
     list_filter = ['is_passing', 'created_at', 'device']
     search_fields = ['device__devEUI', 'fCnt']
-    readonly_fields = ['data_hex', 'is_passing', 'created_at']
+    readonly_fields = ['data_hex', 'is_passing', 'rx_info', 'tx_info', 'created_at']
     ordering = ['-created_at']
     
     def get_queryset(self, request):
